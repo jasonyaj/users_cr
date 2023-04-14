@@ -17,11 +17,18 @@ def new():
 
 @app.route('/process', methods=['POST'])
 def add_user():
-    print( request.form)
     new_user = {
         'first_name' : request.form['first_name'],
         'last_name' : request.form['last_name'],
         'email' : request.form['email']
     }
-    Todo.create_one( new_user )
+    user_id = Todo.create_one( new_user )
+    return redirect('/users')
+
+@app.route('/users/<int:id>/delete')
+def delete_user( id ):
+    data = {
+        'user_id' : id
+    }
+    Todo.delete_one( data )
     return redirect('/users')

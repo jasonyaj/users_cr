@@ -12,7 +12,9 @@ class Todo:
 
     @classmethod
     def get_all( cls ):
-        query = "SELECT * FROM users"
+        query = """
+            SELECT * FROM users
+        """
 
         result = connectToMySQL(DATABASE).query_db( query )
 
@@ -28,3 +30,25 @@ class Todo:
 
         result = connectToMySQL( DATABASE ).query_db( query, data )
         return result
+
+    @classmethod
+    def update_one(cls, data):
+        query = """
+            UPDATE users
+            SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s
+            WHERE id = %(user_id)s
+        """
+
+        result = connectToMySQL( DATABASE ).query_db( query, data )
+        return result
+
+    @classmethod
+    def delete_one(cls, data):
+        query = """
+            DELETE FROM users
+            WHERE id = %(user_id)s
+        """
+
+        result = connectToMySQL( DATABASE ).query_db( query, data )
+        return result
+
